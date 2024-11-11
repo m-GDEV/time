@@ -1,0 +1,70 @@
+<html>
+
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<div class="flex h-dvh w-dvw flex-row items-center justify-center gap-20 bg-black" style="font-family: Orbitron; font-weight: 400">
+  <script>
+        // 1. Function to get AM or PM based on current local time
+    function getAmOrPm() {
+      const currentHour = new Date().getHours();
+      return currentHour >= 12 ? 'PM' : 'AM';
+    }
+
+    // 2. Function to get time in hh:mm format based on current local time
+    function getFormattedTime() {
+      const date = new Date();
+      let hours = date.getHours();
+      const minutes = date.getMinutes();
+
+      // Convert hours to 12-hour format
+      const isPm = hours >= 12;
+      hours = hours % 12 || 12; // Convert 0 to 12 for AM/PM format
+
+      // Pad minutes with leading zero if needed
+      const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+      const paddedHours = hours < 10 ? `0${hours}` : hours;
+
+      return [paddedHours.toString(), paddedMinutes.toString()];
+    }
+
+    function modifyPage() {
+        document.querySelector('#ampm').innerHTML = getAmOrPm();
+        document.querySelector('#hour1').innerHTML = getFormattedTime()[0][0]
+        document.querySelector('#hour2').innerHTML = getFormattedTime()[0][1]
+        document.querySelector('#min1').innerHTML = getFormattedTime()[1][0]
+        document.querySelector('#min2').innerHTML = getFormattedTime()[1][1]
+    }
+
+    function updateTime() {
+      setInterval(() => {
+          modifyPage()
+      }, 2000)
+    }
+
+    
+
+    updateTime()
+  </script>
+
+  <div class="relative flex items-center justify-center gap-20 px-20">
+    <hr class="absolute left-0 top-[50%] z-[50] h-[0.5rem] w-full border-none bg-black p-1" />
+
+    <div class="relative flex rounded-2xl bg-[#0d0d0d] text-[#b9b9b9] px-4">
+      <p id="ampm" class="absolute left-[5%] top-[5%] text-[2.5rem] font-bold">AM</p>
+      <p id="hour1" class="text-[30rem] leading-snug">0</p>
+      <p id="hour2" class="text-[30rem] leading-snug">9</p>
+    </div>
+
+    <div class="relative flex rounded-2xl bg-[#0d0d0d] text-[#b9b9b9] px-4">
+      <p id="min1" class="text-[30rem] leading-snug">0</p>
+      <p id="min2" class="text-[30rem] leading-snug">0</p>
+    </div>
+  </div>
+</div>
+</html>
+
